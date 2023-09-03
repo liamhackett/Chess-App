@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -44,3 +45,11 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+=======
+# Chess-App
+To Use React App
+
+1. clone repository
+2. run "npm install"
+3. run "npm run start" to start localhost server with app
+>>>>>>> a9d5db13675e198cd1fd6a4bcacbd07852036948

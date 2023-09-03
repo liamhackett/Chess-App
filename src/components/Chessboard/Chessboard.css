@@ -6,3 +6,47 @@
     grid-template-rows: repeat(8, 75px);
     background-color: white;
 }
+
+#pawn-promotion-modal {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+#pawn-promotion-modal.hidden {
+    display: none;
+}
+
+#pawn-promotion-modal > .modal-body {
+    position: absolute;
+    top: calc(50% - 150px);
+    left: calc(50% - 300px);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 300px;
+    width: 600px;
+    background-color: rgba(127, 127, 127, 0.5);
+}
+
+#pawn-promotion-modal > .modal-body > img {
+    height: 120px;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+#pawn-promotion-modal > .modal-body >img:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+/* .tile-highlight::before {
+    content: " ";
+    width: 24px;
+    height: 24px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    
+} */

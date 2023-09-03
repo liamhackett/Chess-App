@@ -5,6 +5,7 @@
     display: grid;
     place-content: center;
 }
+
 .black-tile {
     background-color: rgb(191,100,78);
 }
@@ -12,8 +13,9 @@
     background-color: rgb(252,240,217);
 }
 
-.tile  .chess-piece-image {
+.tile .chess-piece-image {
     width: 60px;
+
 }
 
 .tile .chess-piece {
@@ -21,13 +23,33 @@
     height: 75px;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 75px
+    background-size: 75px;
 }
 
 .tile .chess-piece:hover {
     cursor: grab;
 }
-
+/* .tile:active {
+    background-color: rgb(248,245,125);
+} */
 .tile .chess-piece:active {
     cursor: grabbing;
+}
+
+
+.tile-highlight:not(.chess-piece-tile)::before {
+    content: " ";
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.tile-highlight.chess-piece-tile::before {
+    position: absolute;
+    content: " ";
+    width: 65px;
+    height: 65px;
+    border: 5px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
 }

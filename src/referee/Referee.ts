@@ -1,87 +1,70 @@
-import { PieceType, TeamType , Piece} from "../components/Chessboard/Chessboard";
+import { PieceType, TeamType , Piece, Position} from "../Constants";
+import { pawnMove, knightMove,  bishopMove, rookMove, queenMove, kingMove, getPossiblePawnMoves, getPossibleKnightMoves, getPossibleBishopMoves, getPossibleRookMoves, getPossibleQueenMoves, getPossibleKingMoves} from "./rules";
 
 export default class Referee {
-
-    tileIsOccupied(x: number, y: number, boardState: Piece[]): boolean {
-        // console.log("Checking if tile is occupied");
-        const piece = boardState.find(p => p.x === x && p.y === y);
-        if(piece){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    tileIsOccupiedByOpponent(x: number, y: number, boardState: Piece[], team: TeamType): boolean {
-        const piece = boardState.find(p => p.x === x && p.y === y && p.team !== team);
-        if (piece) {
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    isEnPassantMove(px: number, py: number, x: number, y: number, type: PieceType, team: TeamType, boardState: Piece[]){
+    
+    isEnPassantMove(initialPosition: Position, desiredPosition: Position, type: PieceType, team: TeamType, boardState: Piece[]){
         const pawnDirection = (team === TeamType.OUR) ? 1: -1;
        
         // upper left or upper right || bottom left or bottom right
         // if a piece is under or above the attacked tile
 
         if (type == PieceType.PAWN){
-            if ((x - px === -1 || x - px === 1)&& y - py === pawnDirection){
-                const piece = boardState.find(p => p.x === x && p.y === y - pawnDirection && p.enPassant);
+            if ((desiredPosition.x - initialPosition.x === -1 || desiredPosition.x - initialPosition.x === 1)&& desiredPosition.y - initialPosition.y === pawnDirection){
+                const piece = boardState.find(p => p.position.x === desiredPosition.x && p.position.y === desiredPosition.y - pawnDirection && p.enPassant);
                 if(piece){
                     return true;
                 }
-            }
-            
+            }    
         }
-       
        return false;
     }
+    
+    // Valid Move Function
+    isValidMove(initialPosition: Position, desiredPosition: Position, type: PieceType, team: TeamType, boardState: Piece[]) {
 
-    isValidMove(px: number, py: number, x: number, y: number, type: PieceType, team: TeamType, boardState: Piece[]) {
-        // console.log("Ref is checking move");
-        // console.log(`"Previous Location: ${px} ${py}`);
-        // console.log(`"Current Location: ${x} ${y}`);
-        // console.log(`Piece Type: ${type}`);
-        // console.log(`Team: ${team}`);
-
-        // pawn movement 
-        if (type === PieceType.PAWN){
-            const specialRow = (team === TeamType.OUR) ? 1: 6;
-            const pawnDirection = (team === TeamType.OUR) ? 1: -1;
+        switch(type) {
+            case PieceType.PAWN:
+                return pawnMove(initialPosition, desiredPosition, type, team, boardState);
             
-            // forward movement
-            if(py === specialRow && y - py === 2 *pawnDirection){
-                if(!this.tileIsOccupied(x, y, boardState) && !this.tileIsOccupied(x, y - pawnDirection, boardState)){
-                        return true;
-                }
-            }
-            else if(px === x && (y - py === pawnDirection)){
-                    if(!this.tileIsOccupied(x, y, boardState)){
-                        return true;
-                    }
-            }
+                case PieceType.KNIGHT:
+                return knightMove(initialPosition, desiredPosition, type, team, boardState);
             
-            // taking a piece
-            else if (x - px === -1 && y - py === pawnDirection){
-                // attack in upper or bottom left corner
-                if(this.tileIsOccupiedByOpponent(x, y, boardState, team)){
-                    return true;
-                }
-            }
-            else if (x - px === 1 && y - py === pawnDirection){
-                // attack in upper or bottom right corner
-                if(this.tileIsOccupiedByOpponent(x, y, boardState, team)){
-                    return true;
-                }
-            }
+            case PieceType.BISHOP:
+                return bishopMove(initialPosition, desiredPosition, type, team, boardState);
+            
+            case PieceType.ROOK:
+                return rookMove(initialPosition, desiredPosition, type, team, boardState);
+            
+            case PieceType.QUEEN:
+                return queenMove(initialPosition, desiredPosition, type, team, boardState);
+            
+            case PieceType.KING:
+                return kingMove(initialPosition, desiredPosition, type, team, boardState);
         }
-
-
-        return false;
     }
+
+    getValidMoves(piece: Piece, boardState: Piece[]) : Position[] {
+         switch(piece.type){
+
+            case PieceType.PAWN:
+                return getPossiblePawnMoves(piece, boardState);
+            case PieceType.KNIGHT:
+                return getPossibleKnightMoves(piece, boardState);
+            case PieceType.BISHOP:
+                return getPossibleBishopMoves(piece, boardState);
+            case PieceType.ROOK:
+                return getPossibleRookMoves(piece, boardState);
+            case PieceType.QUEEN:
+                return getPossibleQueenMoves(piece, boardState);
+            case PieceType.KING:
+                return getPossibleKingMoves(piece, boardState);
+            default: return [];
+
+
+         }
+ 
+    }
+
+
 }

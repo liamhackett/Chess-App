@@ -3,4 +3,57 @@
   place-content: center;
   height: 100vh;
   background-color: #2f2f2f;
+  margin-left: 290px;
+}
+
+/* Updated CSS for side navigation bar */
+
+.icon-big {
+  font-size: 2rem;
+  margin: 15px;
+}
+
+body, ul {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  background-color: #2f2f2f;
+}
+
+.sidebar {
+  width: 200px; /* Adjust the width as needed */
+  background-color: #333333;
+  color: #fff;
+  padding-left: 10px;
+  min-height: 100vh; 
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); 
+}
+
+.logo a {
+  text-decoration: none;
+  font-size: 36px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 20px; 
+}
+
+.nav-links {
+  list-style: none;
+}
+
+.nav-links li {
+  margin-bottom: 10px; /* Adjust the spacing between navigation links */
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #f2f2f2;
 }

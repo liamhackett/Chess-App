@@ -3,13 +3,12 @@ import './Chessboard.css';
 import Tile from '../Tile/Tile';
 import Referee from "../../referee/Referee";
 import { VERTICAL_AXIS, HORIZONTAL_AXIS, GRID_SIZE, BOARD_SIZE, BOARD_OFFSET, Position, Piece, TeamType, PieceType, initialBoardState, samePosition } from '../../Constants';
-import { type } from 'os';
+
 
 
 // TODO: Add a way to have it console.log moves as they would be recorded in the chess format
 // Deal with checks and checkmates
-// King movement and castling
-// Clean up Queen movement and rook movement
+// castling
 // Add log on side of chess board with moves in chess format e.g. 1. e4 e5
 // Add the rest of the user interface for the web
 // Highlight which square the last move came from 
@@ -25,19 +24,7 @@ export default function Chessboard() {
     const chessboardRef = useRef<HTMLDivElement>(null);
     const modalRef = useRef<HTMLDivElement>(null);
 
-
-    // // Keeps track of moves in chess notation
-
-    // const [moves, setMoves] = useState<string[]>([]); // State to keep track of moves
-    
-    
-    // function convertToChessNotation(move: { x: number; y: number }): string {
-    //     const col = HORIZONTAL_AXIS[move.x];
-    //     const row = VERTICAL_AXIS.length - move.y;
-    //     return `${col}${row}`;
-    // }
-
-    const referee = new Referee;
+    const referee = new Referee();
 
     function updateValidMoves(){
         setPieces((currentPieces) => {
@@ -55,7 +42,7 @@ export default function Chessboard() {
             return `${columnLetter}${rowNumber}`;
     }
     
-
+    
     function grabPiece(e: React.MouseEvent<HTMLDivElement, MouseEvent>){
         updateValidMoves();
 
@@ -86,7 +73,6 @@ export default function Chessboard() {
     // MOVE PIECE
 
     function movePiece(e: React.MouseEvent){
-        const element = e.target as HTMLElement;
         const chessboard = chessboardRef.current;
         if(activePiece && chessboard){
             const minX = chessboard.offsetLeft - BOARD_OFFSET / 2;
@@ -204,15 +190,6 @@ export default function Chessboard() {
                     }, [] as Piece[])
                     
                     setPieces(updatedPieces);
-
-                    // const notation = `${convertToChessNotation(grabPosition)} ${convertToChessNotation({
-                    //     x,
-                    //     y,
-                    //   })}`;
-                    //   setMoves((prevMoves) => [...prevMoves, notation]);
-              
-                    //   // Log the moves to the console
-                    //   console.log(moves.join(' '));
                     
                 }
                 else {
@@ -285,7 +262,6 @@ export default function Chessboard() {
                 board.push(<Tile key={`${i},${j}`} image={image} number= {number} highlight = {highlight} />);
                
         }
-        const tile = board.find(t => t.key === "1, 0");
        
 
     }
@@ -293,10 +269,10 @@ export default function Chessboard() {
         <>
         <div id="pawn-promotion-modal" className="hidden" ref={modalRef}>
             <div className="modal-body">
-                <img onClick={() => promotePawn(PieceType.QUEEN)} src = {`/assets/images/queen_${promotionTeamType()}.png`} />
-                <img onClick={() => promotePawn(PieceType.ROOK)} src = {`/assets/images/rook_${promotionTeamType()}.png`}/>
-                <img onClick={() => promotePawn(PieceType.KNIGHT)} src = {`/assets/images/knight_${promotionTeamType()}.png`} />
-                <img onClick={() => promotePawn(PieceType.BISHOP)} src = {`/assets/images/bishop_${promotionTeamType()}.png`} />
+                <img onClick={() => promotePawn(PieceType.QUEEN)} src = {`/assets/images/queen_${promotionTeamType()}.png`} alt="Queen"/>
+                <img onClick={() => promotePawn(PieceType.ROOK)} src = {`/assets/images/rook_${promotionTeamType()}.png`} alt="Rook"/>
+                <img onClick={() => promotePawn(PieceType.KNIGHT)} src = {`/assets/images/knight_${promotionTeamType()}.png`} alt="Knight" />
+                <img onClick={() => promotePawn(PieceType.BISHOP)} src = {`/assets/images/bishop_${promotionTeamType()}.png`} alt="Bishop" />
             </div>
         </div>
             <div
